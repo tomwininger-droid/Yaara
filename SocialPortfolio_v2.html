@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yaara TZIN — Social Media Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ──────────────────────────────────────────────────── */
+    :root {
+      --bg:        #FDF8F5;
+      --bg2:       #F7F0EC;
+      --bg3:       #EFE5DF;
+      --hero-bg:   #120810;
+      --dark:      #18090F;
+      --dark2:     #230D16;
+      --pink:      #E8006F;
+      --pink-hi:   #FF1A84;
+      --pink-lt:   #FFE0EF;
+      --pink-dim:  rgba(232,0,111,0.10);
+      --pink-mid:  rgba(232,0,111,0.22);
+      --rose:      #FF7BAD;
+      --peach:     #FFB3CB;
+      --ink:       #1A0C12;
+      --ink-dim:   rgba(26,12,18,0.55);
+      --ink-xs:    rgba(26,12,18,0.28);
+      --border:    rgba(232,0,111,0.15);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --cond:      'Barlow Condensed', sans-serif;
+      --sans:      'Plus Jakarta Sans', sans-serif;
+      --hand:      'Caveat', cursive;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    /* ── RESET ───────────────────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:72px; }
+    body { background:var(--bg); color:var(--ink); font-family:var(--sans); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+    img { display:block; max-width:100%; }
+    a { color:inherit; text-decoration:none; }
+    button { background:none; border:none; cursor:pointer; font-family:inherit; color:inherit; }
+
+    /* ── CURSOR ──────────────────────────────────────────────────── */
+    #cursor {
+      position:fixed; z-index:9998; pointer-events:none;
+      width:12px; height:12px; border-radius:50%; background:var(--pink);
+      transform:translate(-50%,-50%); transition:width 0.2s, height 0.2s;
+      mix-blend-mode:difference;
+    }
+    #cursor.lg { width:48px; height:48px; background:rgba(232,0,111,0.2); }
+
+    /* ── PRELOADER ───────────────────────────────────────────────── */
+    #preloader {
+      position:fixed; inset:0; z-index:9999;
+      background:var(--hero-bg); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px;
+    }
+    .pre-text { font-family:var(--hand); font-size:48px; color:#fff; }
+    .pre-text span { color:var(--pink); }
+    .pre-bar { width:160px; height:1px; background:rgba(232,0,111,0.2); position:relative; overflow:hidden; }
+    .pre-bar::after { content:''; position:absolute; inset-block:0; right:100%; width:100%; background:var(--pink); animation:preLoad 1.2s ease forwards; }
+    @keyframes preLoad { to{right:0} }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    .nav {
+      position:fixed; top:0; left:0; right:0; z-index:800;
+      height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 56px;
+      transition:background 0.4s, box-shadow 0.4s;
+    }
+    .nav.scrolled { background:rgba(253,248,245,0.95); backdrop-filter:blur(14px); box-shadow:0 1px 24px rgba(232,0,111,0.08); }
+    .nav-logo { font-family:var(--hand); font-size:26px; font-weight:700; color:var(--ink); transition:color 0.4s; }
+    .nav-logo span { color:var(--pink); }
+    .nav.scrolled .nav-logo { color:var(--ink); }
+    .nav-links { display:flex; gap:36px; list-style:none; font-size:14px; font-weight:500; }
+    .nav-links a { color:rgba(255,255,255,0.65); transition:color 0.2s; }
+    .nav-links a:hover { color:var(--pink); }
+    .nav.scrolled .nav-links a { color:var(--ink-dim); }
+    .nav.scrolled .nav-links a:hover { color:var(--pink); }
+    .nav-hire {
+      background:var(--pink); color:#fff; font-size:13px; font-weight:700;
+      padding:10px 24px; border-radius:999px; letter-spacing:0.02em;
+      transition:background 0.25s, transform 0.2s;
+    }
+    .nav-hire:hover { background:var(--pink-hi); transform:translateY(-1px); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERO V2 — BRIGHT CENTERED + FLOATING MOCKUPS PEEK BELOW
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      height: 100vh;
+      max-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 100px 56px 48px;
+    }
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Pink blob background */
+    .hero::before {
+      content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+      background-image:radial-gradient(rgba(232,0,111,0.06) 1.5px, transparent 1.5px);
+      background-size:32px 32px;
+    }
+    /* Soft pink radial glow */
+    .hero::after {
+      content:''; position:absolute;
+      top:0; left:50%; transform:translateX(-50%);
+      width:900px; height:700px; border-radius:0 0 50% 50%; z-index:0;
+      background:radial-gradient(ellipse at center top, var(--pink-lt) 0%, rgba(255,224,239,0) 65%);
+      pointer-events:none;
+    }
+
+    /* ── Portrait — top right corner ─────────────────────────────── */
+    .hero-portrait {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 340px;
+      z-index: 3;
+      overflow: hidden;
+    }
+    /* Gradient fade blending portrait into light background */
+    .hero-portrait::after {
+      content:''; position:absolute; inset:0;
+      background:
+        linear-gradient(to bottom, transparent 20%, var(--bg) 88%),
+        linear-gradient(to left, transparent 25%, var(--bg) 88%),
+        linear-gradient(to right, transparent 50%, rgba(255,224,239,0.3) 100%);
+      pointer-events:none;
+    }
+    .hero-portrait img {
+      width:100%; height:100%; object-fit:cover; object-position:center top;
+      filter:saturate(0.95) brightness(1.02);
+    }
+    /* Pink tint glow on portrait edge */
+    .hero-portrait-glow {
+      position:absolute; top:-20px; right:-20px; z-index:2;
+      width:200px; height:200px; border-radius:50%;
+      background:radial-gradient(circle, rgba(232,0,111,0.18) 0%, transparent 70%);
+      pointer-events:none;
+    }
+
+    /* ── Centered headline — "Hi, I'm" personal ─────────────────── */
+    .hero-headline {
+      position: relative; z-index: 4;
+      text-align: center;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-greeting {
+      font-family: var(--hand);
+      font-size: clamp(28px, 3.5vw, 44px);
+      color: var(--pink);
+      margin-bottom: 4px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-wave { display:inline-block; animation:wave 2.2s ease-in-out infinite; }
+    @keyframes wave { 0%,100%{transform:rotate(0deg)} 25%{transform:rotate(20deg)} 75%{transform:rotate(-10deg)} }
+    .hero-name-row {
+      display: flex; align-items: baseline; justify-content: center;
+      gap: 14px; line-height: 1; margin-bottom: 4px;
+    }
+    .hl-bold {
+      font-family: var(--cond);
+      font-size: clamp(64px, 9vw, 120px);
+      font-weight: 900;
+      color: var(--ink);  /* DARK on bright bg */
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+    .hl-serif-name {
+      font-family: var(--serif);
+      font-size: clamp(68px, 9.5vw, 128px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--pink);
+      letter-spacing: -0.02em;
+      line-height: 0.85;
+    }
+    .hero-role-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 12px;
+    }
+    .hero-role-dash { width: 36px; height: 2px; background: var(--pink); border-radius: 1px; }
+    .hero-role-text {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.24em;
+      color: var(--ink-dim); text-transform: uppercase;
+    }
+    .hero-typed-row {
+      font-family: var(--hand); font-size: clamp(20px, 2.5vw, 28px);
+      color: var(--pink); min-height: 36px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #heroTyped::after { content:'|'; animation:blink 0.75s step-end infinite; color:var(--pink); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-subtitle {
+      position: relative; z-index: 4;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.20em;
+      color: var(--ink-xs);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 10px 0 18px;
+    }
+    .hero-subtitle span { color: var(--pink); }
+
+    /* ── CTA row ─────────────────────────────────────────────────── */
+    .hero-cta {
+      position: relative; z-index: 4;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 32px;
+    }
+    .btn-pink-hero {
+      background:var(--pink); color:#fff; font-size:14px; font-weight:700;
+      padding:13px 32px; border-radius:999px;
+      transition:background 0.25s, transform 0.2s;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn-pink-hero:hover { background:var(--pink-hi); transform:translateY(-2px); }
+
+    /* ── Floating mockup cards — normal flow, naturally extends hero ── */
+    .hero-mockups {
+      position: relative; z-index: 4;
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: 28px;
+      flex-shrink: 0;
+      /* slight overflow sides only — visible thanks to overflow:visible on hero sides */
+    }
+    .mockup-wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      flex-shrink: 0;
+    }
+    .mockup-label {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em;
+      color: var(--ink-xs); text-transform: uppercase; white-space: nowrap;
+    }
+    /* Base card */
+    .mc {
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 32px 80px rgba(26,12,18,0.22), 0 0 0 1px rgba(255,255,255,0.08);
+      position: relative; flex-shrink: 0;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.5s;
+    }
+    .mc:hover {
+      transform: translateY(-16px) scale(1.03) !important;
+      box-shadow: 0 48px 120px rgba(232,0,111,0.25), 0 0 0 1px rgba(232,0,111,0.15);
+    }
+
+    /* Card sizes & rotations — BIG */
+    .mc-1 { width:255px; height:335px; transform:rotate(-5deg) translateY(48px); }
+    .mc-2 { width:285px; height:385px; transform:rotate(-2.5deg) translateY(24px); }
+    .mc-3 { width:370px; height:480px; transform:rotate(0deg) translateY(0); }
+    .mc-4 { width:285px; height:385px; transform:rotate(2.5deg) translateY(24px); }
+    .mc-5 { width:255px; height:335px; transform:rotate(5deg) translateY(48px); }
+
+    /* ── CARD 1: Instagram Grid (Fashion) ─────────────────────────── */
+    .mc-1 { background:#1A0A12; }
+    .ig-header { padding:12px 14px; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .ig-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--pink),var(--peach)); flex-shrink:0; }
+    .ig-handle { font-family:var(--sans); font-size:11px; font-weight:600; color:#fff; }
+    .ig-follow { margin-right:0; margin-left:auto; font-family:var(--sans); font-size:10px; font-weight:700; color:var(--pink); }
+    .ig-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; padding:0; }
+    .ig-thumb { aspect-ratio:1; }
+    .ig-t1 { background:linear-gradient(135deg,#FF5CA8,#E8006F); }
+    .ig-t2 { background:linear-gradient(135deg,#FFB3CC,#FF7BAD); }
+    .ig-t3 { background:linear-gradient(135deg,#3D0015,#8A003A); }
+    .ig-t4 { background:linear-gradient(135deg,#FF7BAD,#FF2D7A); }
+    .ig-t5 { background:linear-gradient(135deg,#E8006F,#FF7BAD); }
+    .ig-t6 { background:linear-gradient(135deg,#FFE0EF,#FFB3CC); }
+    .ig-t7 { background:linear-gradient(135deg,#8A003A,#E8006F); }
+    .ig-t8 { background:linear-gradient(135deg,#FF2D7A,#FFB3CC); }
+    .ig-t9 { background:linear-gradient(135deg,#3D0015,#FF5CA8); }
+    .ig-engagement { padding:10px 14px; display:flex; gap:14px; }
+    .ig-eng-item { display:flex; align-items:center; gap:4px; font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.45); }
+
+    /* ── CARD 2: TikTok Screen ──────────────────────────────────── */
+    .mc-2 { background:#0D0D0D; }
+    .tt-bg { width:100%; height:200px; background:linear-gradient(160deg,#FF7B00,#1A0400,#2D0010); position:relative; overflow:hidden; }
+    .tt-bg::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.25); }
+    .tt-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.9); display:flex; align-items:center; justify-content:center; z-index:2; }
+    .tt-play::after { content:''; border-left:14px solid #0D0D0D; border-top:8px solid transparent; border-bottom:8px solid transparent; margin-left:3px; }
+    .tt-right { position:absolute; right:8px; top:14px; z-index:3; display:flex; flex-direction:column; gap:14px; align-items:center; }
+    .tt-btn { display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .tt-btn-icon { font-size:18px; }
+    .tt-btn-count { font-family:var(--mono); font-size:8px; color:rgba(255,255,255,0.6); }
+    .tt-music-disc { width:24px; height:24px; border-radius:50%; border:3px solid rgba(255,255,255,0.8); background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; font-size:9px; animation:spin 3s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .tt-bottom { padding:12px 12px 8px; }
+    .tt-user { font-family:var(--sans); font-size:12px; font-weight:700; color:#fff; margin-bottom:5px; }
+    .tt-caption { font-family:var(--sans); font-size:10px; color:rgba(255,255,255,0.7); line-height:1.4; margin-bottom:6px; }
+    .tt-audio { display:flex; align-items:center; gap:5px; font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.5); }
+    .tt-fy { position:absolute; top:8px; left:50%; transform:translateX(-50%); display:flex; gap:14px; font-family:var(--sans); font-size:11px; font-weight:600; color:rgba(255,255,255,0.5); z-index:3; white-space:nowrap; }
+    .tt-fy .active { color:#fff; border-bottom:1.5px solid #fff; padding-bottom:1px; }
+
+    /* ── CARD 3: Analytics Dashboard (center/largest) ─────────────── */
+    .mc-3 { background:#12080F; }
+    .dash-header { padding:18px 20px 12px; border-bottom:1px solid rgba(232,0,111,0.1); }
+    .dash-title { font-family:var(--sans); font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; }
+    .dash-sub { font-family:var(--mono); font-size:9px; color:rgba(232,0,111,0.5); letter-spacing:0.12em; text-transform:uppercase; }
+    .dash-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(232,0,111,0.08); padding:0; margin:14px 18px; }
+    .dash-stat-box { padding:12px 14px; background:#12080F; }
+    .dash-stat-num { font-family:var(--serif); font-size:28px; font-weight:700; color:var(--pink); line-height:1; }
+    .dash-stat-lbl { font-family:var(--mono); font-size:8px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.1em; margin-top:2px; }
+    .dash-chart-area { padding:14px 18px 18px; }
+    .dash-chart-label { font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; }
+    .dash-bars { display:flex; align-items:flex-end; gap:5px; height:72px; }
+    .dash-bar { flex:1; border-radius:3px 3px 0 0; position:relative; }
+    .dash-bar:nth-child(1) { height:35%; background:rgba(232,0,111,0.3); }
+    .dash-bar:nth-child(2) { height:55%; background:rgba(232,0,111,0.45); }
+    .dash-bar:nth-child(3) { height:42%; background:rgba(232,0,111,0.35); }
+    .dash-bar:nth-child(4) { height:70%; background:rgba(232,0,111,0.55); }
+    .dash-bar:nth-child(5) { height:88%; background:rgba(232,0,111,0.7); }
+    .dash-bar:nth-child(6) { height:95%; background:var(--pink); box-shadow:0 0 14px rgba(232,0,111,0.5); }
+    .dash-bar:nth-child(7) { height:78%; background:rgba(232,0,111,0.6); }
+    .dash-trend { display:flex; align-items:center; gap:6px; margin-top:10px; font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.35); }
+    .dash-trend-up { color:#3DD68C; }
+
+    /* ── CARD 4: LinkedIn Post ───────────────────────────────────── */
+    .mc-4 { background:#0A0D1A; }
+    .li-header { padding:8px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .li-avatar { width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#0A66C2,#004182); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:#fff; font-weight:700; font-family:var(--sans); }
+    .li-info { flex:1; }
+    .li-name { font-family:var(--sans); font-size:8px; font-weight:700; color:#fff; }
+    .li-follow { font-family:var(--sans); font-size:7px; color:#0A66C2; font-weight:600; }
+    .li-content { padding:8px 10px; }
+    .li-text { font-family:var(--sans); font-size:8px; color:rgba(255,255,255,0.7); line-height:1.5; margin-bottom:6px; }
+    .li-img { height:60px; background:linear-gradient(135deg,#0A3060,#0A66C2); border-radius:4px; margin-bottom:6px; display:flex; align-items:center; justify-content:center; }
+    .li-img-label { font-family:var(--cond); font-size:14px; font-weight:700; color:rgba(255,255,255,0.6); letter-spacing:0.05em; text-transform:uppercase; }
+    .li-reactions { display:flex; align-items:center; gap:6px; padding:4px 10px 6px; border-top:1px solid rgba(255,255,255,0.05); }
+    .li-react-icons { display:flex; }
+    .li-react-icon { font-size:9px; margin-right:-2px; }
+    .li-react-count { font-family:var(--mono); font-size:7px; color:rgba(255,255,255,0.3); }
+    .li-react-count-2 { font-family:var(--mono); font-size:7px; color:rgba(255,255,255,0.3); margin-left:auto; }
+
+    /* ── CARD 5: Instagram Story ─────────────────────────────────── */
+    .mc-5 { background:#0D0812; }
+    .story-bg { position:absolute; inset:0; background:linear-gradient(160deg,#AA00FF,#E8006F,#FF7B00); }
+    .story-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.28); }
+    .story-content { position:relative; z-index:2; height:100%; padding:8px; display:flex; flex-direction:column; }
+    .story-progress { display:flex; gap:2px; margin-bottom:6px; }
+    .story-prog-bar { height:2px; border-radius:1px; flex:1; background:rgba(255,255,255,0.4); }
+    .story-prog-bar.done { background:rgba(255,255,255,0.9); }
+    .story-user-row { display:flex; align-items:center; gap:5px; margin-bottom:auto; }
+    .story-user-avatar { width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,0.9); border:1.5px solid rgba(255,255,255,0.8); }
+    .story-username { font-family:var(--sans); font-size:8px; font-weight:600; color:#fff; }
+    .story-time { font-family:var(--mono); font-size:6px; color:rgba(255,255,255,0.6); margin-left:2px; }
+    .story-cta-area { text-align:center; margin-bottom:6px; }
+    .story-big { font-family:var(--cond); font-size:20px; font-weight:900; color:#fff; text-transform:uppercase; line-height:1; margin-bottom:4px; text-shadow:0 2px 12px rgba(0,0,0,0.5); }
+    .story-swipe { font-family:var(--mono); font-size:7px; color:rgba(255,255,255,0.7); letter-spacing:0.1em; }
+    .story-swipe-arrow { display:block; font-size:10px; margin-bottom:2px; }
+    .story-input { background:rgba(255,255,255,0.15); border-radius:999px; padding:4px 8px; display:flex; align-items:center; gap:4px; }
+    .story-input-text { font-family:var(--sans); font-size:7px; color:rgba(255,255,255,0.6); flex:1; }
+    .story-input-send { font-size:10px; }
+
+    /* ── HERO LOGO STRIP ─────────────────────────────────────────── */
+    .hero-logo-strip { width:100%; padding:0; }
+    .logo-strip-label { text-align:center; font-family:var(--mono); font-size:9px; letter-spacing:0.28em; color:var(--ink-xs); text-transform:uppercase; margin-bottom:20px; }
+    .logo-strip-track-wrap { overflow:hidden; width:100%; mask-image:linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image:linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%); }
+    .logo-strip-track { display:flex; gap:0; animation:logoScroll 32s linear infinite; width:max-content; }
+    .logo-strip-track:hover { animation-play-state:paused; }
+    @keyframes logoScroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .logo-strip-item { display:flex; align-items:center; justify-content:center; padding:12px 56px; white-space:nowrap; border-right:1px solid var(--border); }
+    .logo-strip-item img { height:64px; width:auto; max-width:220px; object-fit:contain; opacity:0.85; filter:grayscale(15%); transition:opacity 0.3s, filter 0.3s, transform 0.3s; }
+    .logo-strip-item:hover img { opacity:1; filter:grayscale(0%); transform:scale(1.06); }
+
+    /* ── TICKER ──────────────────────────────────────────────────── */
+    .ticker {
+      background:var(--dark); padding:16px 0; overflow:hidden;
+      border-top:2px solid var(--pink);
+    }
+    .ticker-track {
+      display:flex; white-space:nowrap;
+      animation:tickerMove 24s linear infinite;
+    }
+    @keyframes tickerMove { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .ticker-item {
+      display:inline-flex; align-items:center; gap:20px; padding:0 40px;
+      font-family:var(--hand); font-size:18px; color:rgba(255,255,255,0.6);
+    }
+    .ticker-item span { color:var(--pink); }
+    .ticker-dot { width:4px; height:4px; border-radius:50%; background:var(--pink); opacity:0.6; }
+
+    /* ── PROJECTS ────────────────────────────────────────────────── */
+    .projects { padding:120px 56px; background:var(--bg); }
+    .section-label { font-family:var(--hand); font-size:20px; color:var(--pink); display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .section-label::before { content:''; width:28px; height:2px; background:var(--pink); border-radius:1px; }
+    .section-title-serif { font-family:var(--serif); font-size:clamp(40px,5vw,68px); font-weight:700; line-height:0.92; color:var(--ink); margin-bottom:12px; }
+    .section-title-serif em { font-style:italic; color:var(--pink); }
+    .section-subtitle { font-family:var(--sans); font-size:15px; color:var(--ink-dim); line-height:1.6; margin-bottom:40px; max-width:600px; }
+    .section-sub { font-size:16px; font-weight:300; color:var(--ink-dim); max-width:520px; line-height:1.85; margin-bottom:64px; }
+
+    /* ── Feed rows ─────────────────────────────────────── */
+    .feed-row { margin-bottom:56px; }
+    .feed-row-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+    .feed-row-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .feed-row-icon.post-icon { background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .feed-row-icon.reel-icon { background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }
+    .feed-row-type { font-family:var(--mono); font-size:11px; letter-spacing:0.22em; color:var(--ink); text-transform:uppercase; font-weight:600; }
+    .feed-row-ratio { font-family:var(--mono); font-size:10px; color:var(--ink-xs); letter-spacing:0.1em; margin-left:4px; }
+    .feed-row-count { margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--ink-xs); letter-spacing:0.1em; }
+
+    /* ── Posts grid 4:5 ─────────────────────────────────── */
+    .posts-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+    .post-card { position:relative; aspect-ratio:4/5; overflow:hidden; cursor:pointer; background:var(--dark); }
+
+    /* ── Reels grid 9:16 ─────────────────────────────────── */
+    .reels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+    .reel-card { position:relative; aspect-ratio:9/16; overflow:hidden; cursor:pointer; background:var(--dark); }
+
+    /* ── Shared card internals ─────────────────────────────── */
+    .project-card { }
+    .pv { position:absolute; inset:0; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .post-card:hover .pv, .reel-card:hover .pv { transform:scale(1.04); }
+    .pv-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; padding:28px; }
+    .pv-icon { font-size:52px; margin-bottom:10px; filter:drop-shadow(0 4px 16px rgba(0,0,0,0.4)); }
+    .pv-name { font-family:var(--serif); font-size:22px; font-weight:700; color:#fff; letter-spacing:0.01em; margin-bottom:16px; text-align:center; }
+    .pv-chart { display:flex; gap:5px; align-items:flex-end; height:48px; margin-bottom:16px; }
+    .pv-bar { width:10px; border-radius:2px 2px 0 0; opacity:0.7; }
+    .pv-stat { font-family:var(--serif); font-size:30px; font-weight:700; color:#fff; line-height:1; }
+    .pv-stat-sub { font-family:var(--mono); font-size:8px; letter-spacing:0.14em; color:rgba(255,255,255,0.45); text-transform:uppercase; margin-top:3px; text-align:center; }
+    .pv-circle1, .pv-circle2 { position:absolute; border-radius:50%; opacity:0.1; }
+    .pv-circle1 { width:200px; height:200px; top:-60px; left:-60px; }
+    .pv-circle2 { width:140px; height:140px; bottom:-30px; right:-30px; }
+    .pv-fashion  { background:linear-gradient(140deg,#FF2D7A 0%,#5C0020 100%); }
+    .pv-fashion .pv-bar  { background:#FFB3CC; }
+    .pv-fashion .pv-circle1,.pv-fashion .pv-circle2 { background:#FFB3CC; }
+    .pv-b2b      { background:linear-gradient(140deg,#1565D8 0%,#051840 100%); }
+    .pv-b2b .pv-bar      { background:#7EB3FF; }
+    .pv-b2b .pv-circle1,.pv-b2b .pv-circle2 { background:#7EB3FF; }
+    .pv-coffee   { background:linear-gradient(140deg,#FF7B00 0%,#1A0900 100%); }
+    .pv-coffee .pv-bar   { background:#FFCC7B; }
+    .pv-coffee .pv-circle1,.pv-coffee .pv-circle2 { background:#FFCC7B; }
+    .pv-beauty   { background:linear-gradient(140deg,#AA00FF 0%,#1A0033 100%); }
+    .pv-beauty .pv-bar   { background:#DDA0FF; }
+    .pv-beauty .pv-circle1,.pv-beauty .pv-circle2 { background:#DDA0FF; }
+    .pv-fitness  { background:linear-gradient(140deg,#FF3D00 0%,#1A0500 100%); }
+    .pv-fitness .pv-bar  { background:#FFAB91; }
+    .pv-fitness .pv-circle1,.pv-fitness .pv-circle2 { background:#FFAB91; }
+    .pv-startup  { background:linear-gradient(140deg,#00C6A0 0%,#001A14 100%); }
+    .pv-startup .pv-bar  { background:#80E8D2; }
+    .pv-startup .pv-circle1,.pv-startup .pv-circle2 { background:#80E8D2; }
+
+    /* Video layer — shows first-frame thumbnail by default, plays on hover */
+    .card-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; opacity:0; transition:opacity 0.5s; }
+    .card-video[src] { opacity:1; }
+
+    /* Carousel — auto-rotating image slideshow for post cards */
+    .card-carousel { position:absolute; inset:0; z-index:1; }
+    .card-carousel-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.8s ease; }
+    .card-carousel-img.active { opacity:1; }
+
+    /* Card controls — mute & info buttons, revealed on hover (desktop) or always visible (touch) */
+    .card-controls { position:absolute; top:54px; right:14px; z-index:6; display:flex; flex-direction:column; gap:8px; opacity:0; transform:translateY(-4px); transition:opacity 0.3s, transform 0.3s; }
+    .post-card:hover .card-controls, .reel-card:hover .card-controls { opacity:1; transform:translateY(0); }
+    .card-control-btn { width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s, transform 0.2s; }
+    .card-control-btn:hover { background:rgba(232,0,111,0.65); transform:scale(1.08); }
+    .card-control-btn svg { width:13px; height:13px; fill:#fff; }
+    /* Touch devices: no hover, so keep controls visible and skip the reveal-on-hover treatments */
+    @media (hover:none) {
+      .card-controls { opacity:1; transform:translateY(0); }
+    }
+
+    /* Overlay gradient */
+    .project-card-overlay { position:absolute; inset:0; z-index:2; background:linear-gradient(to top, rgba(15,0,8,0.92) 0%, rgba(15,0,8,0.3) 45%, transparent 70%); }
+
+    /* Reel play button */
+    .reel-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4; width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); border:1.5px solid rgba(255,255,255,0.35); display:flex; align-items:center; justify-content:center; transition:background 0.3s, transform 0.3s; pointer-events:none; }
+    .reel-play svg { width:18px; height:18px; fill:#fff; margin-left:2px; }
+    .reel-card:hover .reel-play { background:rgba(232,0,111,0.5); transform:translate(-50%,-50%) scale(1.1); }
+
+    /* Type badge (top-right) */
+    .card-type-badge { position:absolute; top:14px; right:14px; z-index:5; display:flex; align-items:center; gap:5px; font-family:var(--mono); font-size:8px; letter-spacing:0.14em; color:#fff; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); padding:5px 10px; border-radius:20px; }
+    .card-type-badge svg { width:10px; height:10px; fill:#fff; flex-shrink:0; }
+
+    /* Card number (top-left) */
+    .project-card-num { position:absolute; top:14px; left:14px; z-index:5; font-family:var(--mono); font-size:9px; letter-spacing:0.14em; color:rgba(255,255,255,0.3); }
+
+    /* View count (reels only) */
+    .card-views { position:absolute; bottom:80px; left:14px; z-index:5; display:flex; align-items:center; gap:5px; font-family:var(--mono); font-size:9px; letter-spacing:0.1em; color:rgba(255,255,255,0.7); }
+    .card-views svg { width:12px; height:12px; fill:rgba(255,255,255,0.7); }
+
+    /* Card body */
+    .project-card-body { position:absolute; bottom:0; left:0; right:0; z-index:5; padding:20px 20px 22px; }
+    .project-card-client { font-family:var(--mono); font-size:8px; letter-spacing:0.16em; color:var(--rose); text-transform:uppercase; margin-bottom:5px; }
+    .project-card-title { font-family:var(--serif); font-size:20px; font-weight:700; color:#fff; line-height:1.1; margin-bottom:8px; }
+    .project-card-stats { display:flex; gap:16px; }
+    .project-stat-val { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--pink); line-height:1; }
+    .project-stat-label { font-family:var(--mono); font-size:7px; letter-spacing:0.1em; color:rgba(255,255,255,0.4); text-transform:uppercase; }
+    .project-card-cta { display:inline-flex; align-items:center; gap:6px; margin-top:10px; font-size:11px; font-weight:700; letter-spacing:0.08em; color:var(--pink-lt); text-transform:uppercase; cursor:pointer; transition:color 0.2s, gap 0.2s; position:relative; z-index:6; }
+    .project-card-cta:hover { color:#fff; gap:10px; }
+
+    /* ── MODAL ───────────────────────────────────────────────────── */
+    .modal-overlay { position:fixed; inset:0; z-index:9000; background:rgba(18,6,12,0.85); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity 0.4s; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:var(--bg); max-width:860px; width:100%; max-height:88vh; overflow-y:auto; border-radius:4px; position:relative; transform:translateY(32px) scale(0.97); transition:transform 0.4s cubic-bezier(0.22,1,0.36,1); box-shadow:0 40px 120px rgba(232,0,111,0.2); }
+    .modal-overlay.open .modal { transform:translateY(0) scale(1); }
+    .modal-header { padding:48px 52px 32px; border-bottom:1px solid var(--border); position:relative; }
+    .modal-close { position:absolute; top:24px; right:24px; width:40px; height:40px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--ink-dim); transition:background 0.2s, color 0.2s; }
+    .modal-close:hover { background:var(--pink); color:#fff; border-color:var(--pink); }
+    .modal-platform { font-family:var(--mono); font-size:9px; letter-spacing:0.2em; color:var(--pink); text-transform:uppercase; margin-bottom:10px; }
+    .modal-title { font-family:var(--serif); font-size:clamp(28px,4vw,44px); font-weight:700; color:var(--ink); line-height:1; margin-bottom:8px; }
+    .modal-subtitle { font-size:15px; color:var(--ink-dim); font-weight:300; }
+    .modal-body { padding:40px 52px 52px; }
+    .modal-stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:2px; background:var(--border); margin-bottom:32px; border:1px solid var(--border); }
+    .modal-stat-box { background:var(--bg); padding:24px 20px; text-align:center; }
+    .modal-stat-num { font-family:var(--serif); font-size:36px; font-weight:700; color:var(--pink); line-height:1; margin-bottom:4px; }
+    .modal-stat-label { font-family:var(--mono); font-size:8px; letter-spacing:0.14em; color:var(--ink-xs); text-transform:uppercase; }
+    .modal-section-title { font-family:var(--serif); font-size:20px; font-weight:600; color:var(--ink); margin-bottom:12px; font-style:italic; }
+    .modal-desc { font-size:15px; font-weight:300; color:var(--ink-dim); line-height:1.9; margin-bottom:32px; }
+    .modal-link-btn { display:inline-flex; align-items:center; gap:8px; background:var(--pink); color:#fff; font-size:14px; font-weight:700; padding:13px 32px; border-radius:999px; transition:background 0.25s, transform 0.2s; }
+    .modal-link-btn:hover { background:var(--pink-hi); transform:translateY(-2px); }
+
+    /* ── DIFFERENTIATION ─────────────────────────────────────────── */
+    .diff { padding:120px 56px; background:var(--dark); position:relative; overflow:hidden; }
+    .diff::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(232,0,111,0.1) 0%, transparent 70%); pointer-events:none; }
+    .diff-header { margin-bottom:80px; }
+    .diff-label { font-family:var(--hand); font-size:20px; color:var(--pink); margin-bottom:12px; }
+    .diff-title { font-family:var(--serif); font-size:clamp(40px,5vw,68px); font-weight:700; line-height:0.92; color:#fff; }
+    .diff-title em { font-style:italic; color:var(--pink); }
+    .diff-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:rgba(232,0,111,0.15); }
+    .diff-item { background:var(--dark2); padding:48px 36px; position:relative; overflow:hidden; transition:background 0.3s; }
+    .diff-item:hover { background:#2D1020; }
+    .diff-item::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(to right, var(--pink), transparent); transform:scaleX(0); transform-origin:left; transition:transform 0.5s; }
+    .diff-item:hover::before { transform:scaleX(1); }
+    .diff-item-num { font-family:var(--serif); font-size:80px; font-weight:700; color:rgba(232,0,111,0.08); line-height:1; margin-bottom:-16px; }
+    .diff-icon { font-size:32px; margin-bottom:20px; }
+    .diff-item-title { font-family:var(--serif); font-size:22px; font-weight:700; color:#fff; margin-bottom:12px; line-height:1.15; }
+    .diff-item-desc { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.8; font-weight:300; }
+    .diff-hand { font-family:var(--hand); font-size:16px; color:var(--pink); margin-top:16px; }
+
+    /* ── ABOUT ───────────────────────────────────────────────────── */
+    .about { padding:120px 56px; background:var(--bg); }
+    .about-inner { display:grid; grid-template-columns:0.8fr 1.2fr; gap:80px; align-items:center; }
+    .about-visual { position:relative; }
+    .about-photo-wrap { width:100%; aspect-ratio:4/5; background:linear-gradient(160deg, var(--pink-lt) 0%, var(--peach) 60%, var(--pink-lt) 100%); border-radius:4px; overflow:hidden; position:relative; }
+    .about-photo-wrap::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(232,0,111,0.25) 0%, transparent 60%); }
+    .about-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+    .about-photo-initials { font-family:var(--serif); font-size:120px; font-weight:700; color:rgba(232,0,111,0.2); }
+    .about-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+    .about-note { position:absolute; bottom:-20px; right:-24px; background:#FFF9C4; padding:16px 20px; box-shadow:2px 4px 16px rgba(0,0,0,0.12); transform:rotate(3deg); max-width:200px; font-family:var(--hand); font-size:15px; line-height:1.5; color:var(--ink); }
+    .about-tape { position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:48px; height:18px; background:rgba(232,0,111,0.25); border-radius:2px; }
+    .about-polaroid { position:absolute; top:-32px; left:-24px; background:#fff; padding:10px 10px 32px; box-shadow:0 8px 32px rgba(0,0,0,0.12); transform:rotate(-4deg); width:120px; font-family:var(--hand); font-size:12px; text-align:center; color:var(--ink-dim); }
+    .about-polaroid-img { height:80px; background:var(--bg2); margin-bottom:8px; font-size:28px; display:flex; align-items:center; justify-content:center; }
+    .about-content { position:relative; }
+    .about-eyebrow { font-family:var(--hand); font-size:20px; color:var(--pink); margin-bottom:12px; }
+    .about-title { font-family:var(--serif); font-size:clamp(36px,4vw,56px); font-weight:700; color:var(--ink); line-height:0.95; margin-bottom:20px; }
+    .about-title em { font-style:italic; color:var(--pink); }
+    .about-divider { width:40px; height:3px; background:var(--pink); margin-bottom:24px; border-radius:2px; }
+    .about-lead { font-size:17px; font-weight:600; color:var(--ink); line-height:1.65; margin-bottom:16px; }
+    .about-body { font-size:15px; font-weight:300; color:var(--ink-dim); line-height:1.9; margin-bottom:36px; }
+    .squiggle { text-decoration:underline wavy var(--pink); text-underline-offset:4px; text-decoration-thickness:2px; }
+    .skills-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:36px; }
+    .skill-item { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:500; color:var(--ink); padding:10px 14px; background:var(--bg2); border-right:3px solid var(--pink); }
+    .skill-icon { font-size:16px; }
+    .about-tools { display:flex; flex-wrap:wrap; gap:8px; }
+    .tool-tag { font-family:var(--mono); font-size:9px; letter-spacing:0.1em; color:var(--ink-dim); border:1px solid var(--bg3); padding:6px 12px; text-transform:uppercase; background:var(--bg2); }
+
+    /* ── CTA ─────────────────────────────────────────────────────── */
+    .cta { padding:120px 56px; background:var(--dark); position:relative; overflow:hidden; text-align:center; }
+    .cta::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:800px; height:800px; border-radius:50%; background:radial-gradient(circle, rgba(232,0,111,0.08) 0%, transparent 70%); }
+    .cta-hand { font-family:var(--hand); font-size:24px; color:var(--pink); margin-bottom:12px; }
+    .cta-title { font-family:var(--serif); font-size:clamp(42px,6vw,84px); font-weight:700; color:#fff; line-height:0.9; margin-bottom:24px; position:relative; z-index:2; }
+    .cta-title em { font-style:italic; color:var(--pink); }
+    .cta-sub { font-size:16px; font-weight:300; color:rgba(255,255,255,0.5); max-width:460px; margin:0 auto 48px; line-height:1.85; position:relative; z-index:2; }
+    .cta-actions { display:flex; gap:14px; justify-content:center; position:relative; z-index:2; }
+    .btn-pink-lg { background:var(--pink); color:#fff; font-size:16px; font-weight:700; padding:18px 44px; border-radius:999px; transition:background 0.25s, transform 0.2s; display:inline-flex; align-items:center; gap:10px; }
+    .btn-pink-lg:hover { background:var(--pink-hi); transform:translateY(-2px); }
+    .btn-outline-lt { background:transparent; color:#fff; font-size:16px; font-weight:600; padding:18px 44px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.25); transition:border-color 0.25s; display:inline-flex; align-items:center; gap:10px; }
+    .btn-outline-lt:hover { border-color:var(--pink); color:var(--pink); }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    .footer { background:var(--bg2); border-top:1px solid var(--border); padding:40px 56px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+    .footer-logo { font-family:var(--hand); font-size:22px; color:var(--ink); }
+    .footer-logo span { color:var(--pink); }
+    .footer-copy { font-family:var(--mono); font-size:9px; letter-spacing:0.12em; color:var(--ink-xs); }
+    .footer-social { display:flex; gap:12px; }
+    .footer-social a { width:36px; height:36px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-dim); transition:background 0.2s, color 0.2s, border-color 0.2s; }
+    .footer-social a:hover { background:var(--pink); color:#fff; border-color:var(--pink); }
+
+    /* ── REVEAL ──────────────────────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.revealed { opacity:1; transform:none; }
+    .reveal-delay-1 { transition-delay:0.1s; }
+    .reveal-delay-2 { transition-delay:0.2s; }
+    .reveal-delay-3 { transition-delay:0.3s; }
+    .reveal-delay-4 { transition-delay:0.4s; }
+
+    /* Mockup entrance animation */
+    .mockup-wrap { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease, transform 0.8s ease; }
+    .mockup-wrap.revealed { opacity:1; transform:translateY(0); }
+    .mockup-wrap:nth-child(1) { transition-delay:0.05s; }
+    .mockup-wrap:nth-child(2) { transition-delay:0.15s; }
+    .mockup-wrap:nth-child(3) { transition-delay:0.25s; }
+    .mockup-wrap:nth-child(4) { transition-delay:0.35s; }
+    .mockup-wrap:nth-child(5) { transition-delay:0.45s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width:1100px) {
+      .hero-portrait { width:200px; height:260px; right:20px; }
+      .hero-mockups { gap:8px; }
+      .mc-1,.mc-5 { display:none; }
+      .posts-grid { grid-template-columns:1fr 1fr; }
+      .reels-grid { grid-template-columns:1fr 1fr 1fr; }
+      .diff-grid { grid-template-columns:1fr 1fr; }
+      .about-inner { grid-template-columns:1fr; }
+    }
+    @media (max-width:768px) {
+      .nav { padding:0 24px; }
+      .nav-links { display:none; }
+      .hero { padding:100px 24px 0; }
+      .hero-portrait { width:140px; height:180px; }
+      .hero-mockups { gap:6px; overflow-x:auto; justify-content:flex-start; padding:0 24px; width:100%; margin-left:0; }
+      .mc-1,.mc-5,.mc-2,.mc-4 { display:none; }
+      .posts-grid { grid-template-columns:1fr; }
+      .reels-grid { grid-template-columns:1fr; max-width:380px; margin:0 auto; }
+      .projects { padding:80px 24px; }
+      .diff-grid { grid-template-columns:1fr; }
+      .about { padding:80px 24px; }
+      .about-inner { grid-template-columns:1fr; }
+      .cta { padding:80px 24px; }
+      .footer { padding:32px 24px; flex-direction:column; align-items:center; text-align:center; }
+      .modal-body { padding:28px 28px 36px; }
+      .modal-header { padding:36px 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-text">Yaara <span>TZIN</span> ✦</div>
+  <div class="pre-bar"></div>
+</div>
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-logo">Yaara <span>TZIN</span></div>
+  <ul class="nav-links">
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#diff">Why Me</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-hire">Hire Me ✦</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ HERO -->
+<section class="hero" id="home">
+
+  <div class="hero-portrait-glow"></div>
+
+  <div class="hero-content">
+
+  <!-- Centered headline — personal "Hi, I'm" style -->
+  <div class="hero-headline">
+    <div class="hero-greeting"><span class="hero-wave">👋</span> Hi, I'm</div>
+    <div class="hero-name-row">
+      <span class="hl-bold">Yaara</span>
+      <span class="hl-serif-name">TZIN</span>
+    </div>
+    <div class="hero-role-row">
+      <div class="hero-role-dash"></div>
+      <div class="hero-role-text">Organic Social Manager</div>
+      <div class="hero-role-dash"></div>
+    </div>
+    <div class="hero-typed-row"><span id="heroTyped"></span></div>
+  </div>
+
+  <!-- Subtitle -->
+  <div class="hero-subtitle">
+    A curated portfolio of <span>brands, stories & social-first thinking</span>
+  </div>
+
+  <!-- CTA row -->
+  <div class="hero-cta">
+    <a href="#projects" class="btn-pink-hero">View My Work →</a>
+  </div>
+
+  </div>
+
+  <!-- ── Logo Strip — replaces hero mockups ── -->
+  <div class="hero-logo-strip" id="heroLogoStrip">
+    <div class="logo-strip-label">Platforms & Tools I Master</div>
+    <div class="logo-strip-track-wrap">
+      <div class="logo-strip-track">
+        <!-- set 1 -->
+        <div class="logo-strip-item">
+          <img src="assets /logos/LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/more_logo_blue.png" alt="More" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/Artboard 2.png" alt="Client logo" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/כוכבית צמודה לוגו שקוף עברית.png" alt="Kochavit" loading="lazy">
+        </div>
+        <!-- set 2 — duplicate for seamless loop -->
+        <div class="logo-strip-item">
+          <img src="assets /logos/LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/more_logo_blue.png" alt="More" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/Artboard 2.png" alt="Client logo" loading="lazy">
+        </div>
+        <div class="logo-strip-item">
+          <img src="assets /logos/כוכבית צמודה לוגו שקוף עברית.png" alt="Kochavit" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COMPONENT: insta-mockup
+     To restore: move this block inside the hero <section> and
+     remove the hero-logo-strip block above.
+     ═══════════════════════════════════════════════════════════════
+<div class="hero-mockups" id="heroMockups">
+  [Card 1: Instagram Grid — nova_threads]
+  [Card 2: TikTok — @bloom.coffee]
+  [Card 3: Analytics Dashboard — Campaign Overview Q1 2024]
+  [Card 4: LinkedIn — NexaSoft 340% lead growth]
+  [Card 5: Instagram Story — luxebeauty SHOP NOW]
+  Full markup saved in git history / SocialPortfolio_v1.html
+</div>
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Instagram Strategy <span class="ticker-dot"></span></div>
+    <div class="ticker-item">TikTok Growth <span class="ticker-dot"></span></div>
+    <div class="ticker-item">LinkedIn B2B <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Content Creation <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Community Building <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Brand Storytelling <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Analytics & Reporting <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Influencer Campaigns <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Instagram Strategy <span class="ticker-dot"></span></div>
+    <div class="ticker-item">TikTok Growth <span class="ticker-dot"></span></div>
+    <div class="ticker-item">LinkedIn B2B <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Content Creation <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Community Building <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Brand Storytelling <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Analytics & Reporting <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Influencer Campaigns <span class="ticker-dot"></span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ PROJECTS -->
+<section class="projects" id="projects">
+  <div class="section-label reveal">Selected Work</div>
+  <h2 class="section-title-serif reveal reveal-delay-1">My Content. <em>Real results.</em></h2>
+  <p class="section-subtitle reveal reveal-delay-2">From brief to execution: see the challenge, the creative solution, and the results</p>
+
+  <!-- ── POSTS 4:5 ── -->
+  <div class="feed-row reveal">
+    <div class="feed-row-header">
+      <div class="feed-row-icon post-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
+      </div>
+      <span class="feed-row-type">Posts <span class="feed-row-ratio">4:5</span></span>
+      <span class="feed-row-count">4 posts</span>
+    </div>
+    <div class="posts-grid">
+
+      <!-- Post 1 — My Designer is on a holiday -->
+      <div class="post-card project-card reveal" data-project="0">
+        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">✨</div><div class="pv-name">Designer Holiday</div></div></div>
+        <img src="assets /My Designer is on a holiday.jpg" class="card-img" alt="Designer Holiday" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <video class="card-video" muted loop playsinline></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Creative Campaign</div>
+          <div class="project-card-title">My Designer is on a Holiday</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Post 2 — Orientation Day -->
+      <div class="post-card project-card reveal reveal-delay-1" data-project="1">
+        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">🎓</div><div class="pv-name">Orientation Day</div></div></div>
+        <img src="assets /Orientation Day in Oranim.jpg" class="card-img" alt="Orientation Day" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <video class="card-video" muted loop playsinline></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Education</div>
+          <div class="project-card-title">Orientation Day in Oranim</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Post 3 — TASE Celebration -->
+      <div class="post-card project-card reveal reveal-delay-2" data-project="2">
+        <div class="pv pv-beauty"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">🎉</div><div class="pv-name">TASE Milestone</div></div></div>
+        <img src="assets /TASE celebrates 10K.jpg" class="card-img" alt="TASE 10K" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <video class="card-video" muted loop playsinline></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Milestone Campaign</div>
+          <div class="project-card-title">TASE Celebrates 10K</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Post 4 — TASE Palo Alto -->
+      <div class="post-card project-card reveal" data-project="3">
+        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">🌟</div><div class="pv-name">TASE Palo Alto</div></div></div>
+        <img src="assets /TASE weldome Palo Alto.jpg" class="card-img" alt="TASE Palo Alto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
+        <video class="card-video" muted loop playsinline></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Event Coverage</div>
+          <div class="project-card-title">TASE Welcomes Palo Alto</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Post 5 — Types of Students in Oranim (carousel) -->
+      <div class="post-card project-card reveal reveal-delay-1" data-project="10">
+        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">🎒</div><div class="pv-name">Types of Students</div></div></div>
+        <div class="card-carousel">
+          <img src="assets /typ.jpeg" class="card-carousel-img active" alt="Types of Students in Oranim"/>
+          <img src="assets /typ1.jpeg" class="card-carousel-img" alt="Types of Students in Oranim"/>
+          <img src="assets /typ2.jpeg" class="card-carousel-img" alt="Types of Students in Oranim"/>
+          <img src="assets /typ3.jpeg" class="card-carousel-img" alt="Types of Students in Oranim"/>
+          <img src="assets /typ4.jpeg" class="card-carousel-img" alt="Types of Students in Oranim"/>
+        </div>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Education</div>
+          <div class="project-card-title">Types of Students in Oranim</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+    </div><!-- /posts-grid -->
+  </div><!-- /feed-row posts -->
+
+  <!-- ── REELS 9:16 ── -->
+  <div class="feed-row reveal">
+    <div class="feed-row-header">
+      <div class="feed-row-icon reel-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+      <span class="feed-row-type">Reels <span class="feed-row-ratio">9:16</span></span>
+      <span class="feed-row-count">6 reels</span>
+    </div>
+    <div class="reels-grid">
+
+      <!-- Reel 1 — TA 90 Seconds -->
+      <div class="reel-card project-card reveal" data-project="9">
+        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">⏱️</div><div class="pv-name">TA 90 Seconds</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets / TA-90 Seconds.mp4"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Quick Tips</div>
+          <div class="project-card-title">TA 90 Seconds</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Reel 2 — The Dekel Interview -->
+      <div class="reel-card project-card reveal reveal-delay-1" data-project="7">
+        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">🎤</div><div class="pv-name">The Dekel Interview</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets / The dekel Interview.mp4"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Interviews</div>
+          <div class="project-card-title">The Dekel Interview</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Reel 3 — Bed Time Story - Seach -->
+      <div class="reel-card project-card reveal reveal-delay-2" data-project="6">
+        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">📖</div><div class="pv-name">Bed Time Story</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets /Bed Time Story - Seach.mp4"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Storytelling</div>
+          <div class="project-card-title">Bed Time Story – Seach</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Reel 4 — SPARKLES Reflecting -->
+      <div class="reel-card project-card reveal" data-project="8">
+        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">✨</div><div class="pv-name">SPARKLES Reflecting</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets /SPARKLES - Reflcting.mov"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Visual Art</div>
+          <div class="project-card-title">SPARKLES – Reflecting</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Reel 5 — SPARKLES Glasses -->
+      <div class="reel-card project-card reveal reveal-delay-1" data-project="5">
+        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">👓</div><div class="pv-name">SPARKLES Glasses</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets /SPARKLES - glasses.mov"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Product Showcase</div>
+          <div class="project-card-title">SPARKLES – Glasses</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+      <!-- Reel 6 — We're All Dealing With Something -->
+      <div class="reel-card project-card reveal reveal-delay-2" data-project="4">
+        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div>
+          <div class="pv-inner"><div class="pv-icon">💭</div><div class="pv-name">Dealing With Something</div></div></div>
+        <video class="card-video" muted loop playsinline preload="metadata" src="assets /were all dealing with someting.mov"></video>
+        <div class="project-card-overlay"></div>
+        <div class="project-card-body">
+          <div class="project-card-client">Relatable Content</div>
+          <div class="project-card-title">We're All Dealing With Something</div>
+          <div class="project-card-cta">Project Details →</div></div></div>
+
+    </div><!-- /reels-grid -->
+  </div><!-- /feed-row reels -->
+
+</section>
+
+<!-- WHY ME -->
+<section class="diff" id="diff">
+  <div class="diff-header">
+    <div class="diff-label reveal">Why Choose Me</div>
+    <h2 class="diff-title reveal reveal-delay-1">Not just another <br><em>social manager.</em></h2>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-item reveal"><div class="diff-item-num">01</div><div class="diff-icon">🎬</div><div class="diff-item-title">High-End Content Production</div><div class="diff-item-desc">I don't just manage social media - I create it. From filming and directing to editing and post-production, I craft content designed for modern attention spans. Every frame, cut, and transition is intentional, ensuring the final result is both visually compelling and platform-native</div><div class="diff-hand">Details make the difference ✓</div></div>
+    <div class="diff-item reveal reveal-delay-1"><div class="diff-item-num">02</div><div class="diff-icon">📖</div><div class="diff-item-title">Brand Storytelling</div><div class="diff-item-desc">Every brand has a unique voice. My role is to translate it into content that feels authentic, recognizable, and consistent across platforms. Whether the tone is educational, playful, professional, or bold, I make sure every post sounds unmistakably like the brand behind it.</div><div class="diff-hand">Consistency builds trust ✓</div></div>
+    <div class="diff-item reveal reveal-delay-2"><div class="diff-item-num">03</div><div class="diff-icon">📈</div><div class="diff-item-title">Creative Backed by Performance</div><div class="diff-item-desc">The work doesn't end when content goes live. I continuously monitor performance, identify what resonates with audiences, and apply those learnings to future content. This process turns every post into an opportunity to improve the next one.</div><div class="diff-hand">Create. Learn. Improve. ✓</div></div>
+    <div class="diff-item reveal reveal-delay-3"><div class="diff-item-num">04</div><div class="diff-icon">💬</div><div class="diff-item-title">Social Media Is My Native Language</div><div class="diff-item-desc">I don't just work in social media — I genuinely enjoy being part of it. I spend my time exploring platforms, following emerging trends, and understanding how people consume content. This allows me to quickly identify what feels relevant, what feels forced, and how brands can participate in conversations authentically.</div><div class="diff-hand">Culture moves fast. So do I. ✓</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-polaroid"><div class="about-polaroid-img">☕</div>always caffeinated</div>
+      <div class="about-photo-wrap">
+        <img src="assets /person.jpg" alt="Yaara TZIN" onerror="this.style.display='none';this.nextSibling.style.display='flex';" />
+        <div class="about-photo-placeholder" style="display:none;"><div class="about-photo-initials">AR</div></div>
+      </div>
+      <div class="about-note"><div class="about-tape"></div>"If it doesn't tell a story, it doesn't get posted." 🌸</div>
+    </div>
+    <div class="about-content">
+      <div class="about-eyebrow reveal">About Me</div>
+      <h2 class="about-title reveal reveal-delay-1">The human <em>behind the handle.</em></h2>
+      <div class="about-divider reveal reveal-delay-2"></div>
+      <p class="about-lead reveal reveal-delay-2">Social Media Manager with 2 years of hands-on experience and 4 years in the advertising industry.</p>
+      <p class="about-body reveal reveal-delay-3">Passionate about turning ideas into content that people actually want to engage with. I combine strategic thinking with creativity, crafting content, scripts, and social-first concepts that help brands tell meaningful stories.<br/><br/>Constantly immersed in digital culture, I stay ahead of trends, analyze performance data, and transform insights into content that resonates with the right audience. From ideation and copywriting to filming and editing, I bring a sharp eye for detail and a deep understanding of what works across today's social platforms.</p>
+      <div class="skills-grid reveal reveal-delay-3">
+        <div class="skill-item"><span class="skill-icon">✍️</span> Content Strategy</div>
+        <div class="skill-item"><span class="skill-icon">🎬</span> Video Editing</div>
+        <div class="skill-item"><span class="skill-icon">📸</span> Content Production</div>
+        <div class="skill-item"><span class="skill-icon">📊</span> Analytics & Reporting</div>
+        <div class="skill-item"><span class="skill-icon">📝</span> Copywriting & Scriptwriting</div>
+        <div class="skill-item"><span class="skill-icon">📈</span> Trend Research</div>
+      </div>
+      <div class="about-tools reveal reveal-delay-4">
+        <div class="tool-tag">CapCut</div><div class="tool-tag">Canva</div><div class="tool-tag">Captions</div>
+        <div class="tool-tag">Edits</div><div class="tool-tag">ChatGPT</div><div class="tool-tag">Gemini</div>
+        <div class="tool-tag">X</div><div class="tool-tag">LinkedIn</div><div class="tool-tag">YouTube</div>
+        <div class="tool-tag">Instagram</div><div class="tool-tag">TikTok</div><div class="tool-tag">Facebook</div>
+        <div class="tool-tag">Meta Business Suite</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-hand reveal">Let's work together ✦</div>
+  <h2 class="cta-title reveal reveal-delay-1">Your next social<br><em>media manager.</em></h2>
+  <p class="cta-sub reveal reveal-delay-2">Ready to turn your social presence into a growth engine? I'm open to full-time roles, freelance projects, and consulting.</p>
+  <div class="cta-actions reveal reveal-delay-3">
+    <a href="mailto:alex@socialbyalex.com" class="btn-pink-lg">✉ Send a Message</a>
+    <a href="assets /yaara_cv.pdf" download="yaara_cv.pdf" class="btn-outline-lt">Download CV →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Alex <span>TZIN</span></div>
+  <div class="footer-copy">© 2026 Yaara TZIN - Organic social media manager</div>
+  <div class="footer-social">
+    <a href="#" aria-label="Instagram">📸</a>
+    <a href="#" aria-label="LinkedIn">in</a>
+    <a href="#" aria-label="TikTok">♪</a>
+    <a href="#" aria-label="X">𝕏</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-platform" id="mPlatform"></div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-subtitle" id="mSubtitle"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-title">Brief</div>
+      <div class="modal-desc" id="mBrief"></div>
+      <div class="modal-section-title">Execution</div>
+      <div class="modal-desc" id="mExecution"></div>
+      <div class="modal-section-title">Results</div>
+      <div class="modal-stats-grid" id="mStats"></div>
+      <a class="modal-link-btn" id="mLink" target="_blank" rel="noopener">View Post →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  { platform:'Instagram · Medical Cannabis', title:'My Designer is on a Holiday', subtitle:'Product-focused content for Seach Medical Group, built within strict industry & Meta regulations', brief:'Create engaging product-focused content for Seach Medical Group while navigating the strict regulatory limitations of the medical cannabis industry and Meta.', execution:'I leveraged a trending social media format and adapted it into a product-focused concept that felt native to the platform. The challenge was to create content that was engaging and relevant to the audience while remaining fully compliant with industry regulations.', results:[{num:'1,674',label:'Views'},{num:'34',label:'Likes'},{num:'2',label:'Comments'},{num:'2',label:'Shares'}], link:'https://www.instagram.com/p/DQR1IolDAfF/?igsh=MTJmNDltOHlycHU1ag%3D%3D' },
+  { platform:'Instagram · Education', title:'Orientation Day in Oranim', subtitle:'Promoting Oranim’s Open Day with a trending, social-first format', brief:'Promote Oranim’s Orientation Day across social media platforms.', execution:'To make the campaign feel relevant and engaging, I leveraged a trending “step counter” app format and adapted it to communicate the Open Day message in a creative, social-first way.', results:[{num:'2,542',label:'Views'},{num:'29',label:'Likes'},{num:'3',label:'Comments'}], link:'https://www.instagram.com/p/DYCMoZ8CHaF/?igsh=cWhxNXYwdHhzcXF5' },
+  { platform:'Instagram · Milestone Campaign', title:'TASE Celebrates 10K', subtitle:'Marking the Tel Aviv Stock Exchange’s 10,000-follower milestone', brief:'Mark the milestone of the Tel Aviv Stock Exchange reaching 10,000 Instagram followers and thank the community for its support.', execution:'I took inspiration from a familiar social media trend where creators celebrate follower milestones with custom cakes. To make the concept relevant to the Tel Aviv Stock Exchange, I created a cake shaped like the iconic TASE building. The idea combined a recognizable internet reference with the brand’s visual identity, making the achievement feel more engaging and relatable.', results:[{num:'4,986',label:'Views'},{num:'55',label:'Likes'},{num:'7',label:'Comments'}], link:'https://www.instagram.com/p/DVLBnd3DTg1/?igsh=MjM4ZjFzOW0xdzMz' },
+  { platform:'Instagram · Event Coverage', title:'TASE Welcomes Palo Alto', subtitle:'Announcing Palo Alto Networks’ launch on the Tel Aviv Stock Exchange', brief:'Communicate Palo Alto Networks’ launch on the Tel Aviv Stock Exchange.', execution:'To communicate Palo Alto Networks’ launch on the Tel Aviv Stock Exchange, I used aviation-inspired visual language. By designing a boarding pass from Palo Alto to Tel Aviv, I created a concept that connected the company’s launch with its arrival to the local market in a simple, recognizable, and visually engaging way.', results:[{num:'7,998',label:'Views'},{num:'78',label:'Likes'},{num:'4',label:'Comments'},{num:'10',label:'Shares'},{num:'5',label:'Saves'}], link:'https://www.instagram.com/p/DVF4oRwDULz/?igsh=MXA4c2l0cGMyeWttcA%3D%3D' },
+  { platform:'Instagram Reels · Capital Markets', title:'We’re All Dealing With Something', subtitle:'Turning a trending format into relatable investing content for young audiences', brief:'Create engaging social content around the capital market that would resonate with younger audiences and drive meaningful engagement.', execution:'I identified a trending social media format and adapted it to the world of investing during the Young Money conference at the Tel Aviv Stock Exchange. By connecting the trend to common investment challenges, I transformed a complex financial topic into relatable, engaging content that resonated with young investors and encouraged interaction.', results:[{num:'22,600',label:'Views'},{num:'155',label:'Likes'},{num:'39',label:'Shares'},{num:'11',label:'Saves'}], link:'https://www.instagram.com/reels/DZKOddctabZ/' },
+  { platform:'TikTok · ADHD Glasses', title:'SPARKLES – Glasses', subtitle:'Turning product variety into a shareable, entertainment-first social asset', brief:'Communicate the wide range of frame styles offered by Sparkles ADHD Glasses in a way that would capture attention and resonate with social media audiences.', execution:'Instead of presenting the different frame options in a traditional product-focused format, I developed a content concept that turned product variety into entertainment. By leveraging humor, relatable storytelling, and platform-native content principles, I transformed a simple product message into a highly shareable social asset. The result showcased the brand’s offering while encouraging viewers to engage, save, and share the content organically.', results:[{num:'7M',label:'Views'},{num:'5,125',label:'Likes'},{num:'759',label:'Saves'},{num:'421',label:'Shares'},{num:'51',label:'Comments'}], link:'https://www.tiktok.com/@sparkles.adhd/video/7463172398095813896?_r=1&_t=ZS-96w7cFn9v1A' },
+  { platform:'Instagram · Medical Cannabis', title:'Bed Time Story – Seach', subtitle:'Turning wellness education into a bedtime-story format for medical cannabis patients', brief:'Create engaging wellness-focused content for Seach Medical Group while operating under strict regulatory limitations as a medical cannabis brand.', execution:'Sleep is a key topic for many medical cannabis patients, so I looked for a way to make educational content feel more engaging and memorable. Instead of using a traditional informational format, I transformed the message into a bedtime story concept, creating a video that mimicked the style of a children’s storybook.', results:[{num:'979',label:'Views'},{num:'25',label:'Likes'},{num:'1',label:'Comment'},{num:'6',label:'Shares'}], link:'https://www.instagram.com/reels/DEe0BIMOqvZ/' },
+  { platform:'TikTok · Influencer Content', title:'The Dekel Interview', subtitle:'A randomized-question format that made an influencer interview feel spontaneous and authentic', brief:'Create engaging branded content with one of FRÉ’s leading influencers.', execution:'Rather than producing a standard influencer interview, I developed a format designed to feel more authentic, dynamic, and audience-driven. I curated a list of highly relevant beauty and skincare questions tailored specifically to Dekel’s expertise in medical aesthetics and skincare. The questions were placed in a jar and drawn at random throughout the video, creating an element of spontaneity that made the conversation feel natural and engaging.', results:[{num:'7,585',label:'Views'},{num:'92',label:'Likes'},{num:'4',label:'Comments'},{num:'21',label:'Saves'},{num:'20',label:'Shares'}], link:'https://www.tiktok.com/@freskincare_il/video/7480562728847854866?_r=1&_t=ZS-96w9uyDfzN6' },
+  { platform:'TikTok · ADHD Glasses', title:'SPARKLES – Reflecting', subtitle:'Packaging a retail launch announcement inside a trend-driven, social-first format', brief:'Communicate the arrival of Sparkles’ glasses designed to support focus and concentration in Super-Pharm stores.', execution:'A retail launch isn’t inherently exciting content — so the challenge was finding a creative angle that would make people care. Instead of announcing that Sparkles glasses were now available at Super-Pharm, I packaged the message inside a short, trend-driven format designed for social consumption.', results:[{num:'2.2M',label:'Views'},{num:'1,123',label:'Likes'},{num:'19',label:'Comments'},{num:'211',label:'Saves'},{num:'142',label:'Shares'}], link:'https://www.tiktok.com/@sparkles.adhd/video/7468323435211476231?_r=1&_t=ZS-96wAAO7KQcf' },
+  { platform:'TikTok · TASE Series', title:'TA 90 Seconds', subtitle:'A recurring rapid-fire interview franchise with the people visiting the Tel Aviv Stock Exchange', brief:'Create engaging social content around the influential guests visiting the Tel Aviv Stock Exchange.', execution:'Inspired by the fast-paced format of V1’s “60 Seconds” series, I developed a recurring content franchise designed specifically for the Tel Aviv Stock Exchange. The concept transformed guest appearances into short, dynamic interviews that explored not only the guests’ professional expertise, but also their perspectives on life, decision-making, success, and the capital markets.<br/><br/>What began as a single content idea evolved into a recurring series featuring some of Israel’s most influential business leaders, entrepreneurs, investors, and public figures.', results:[{num:'277,760',label:'Views'},{num:'9,175',label:'Likes'},{num:'142',label:'Comments'},{num:'222',label:'Saves'},{num:'373',label:'Shares'}], link:'' },
+  { platform:'Instagram · Education', title:'Types of Students in Oranim', subtitle:'Adapting the viral "Barbie-style character" trend into relatable student personas for Oranim College', brief:'Create relatable and engaging social media content for Oranim College students.', execution:'Inspired by the viral “Barbie-style character” trend, I adapted the format to the student experience at Oranim. The post featured different student personas from various faculties, highlighting the tools, habits, and characteristics associated with each one. By combining a popular social media trend with authentic student insights, I created content that felt relevant, shareable, and highly relatable to the target audience.', results:[{num:'6,646',label:'Views'},{num:'72',label:'Likes'},{num:'10',label:'Comments'},{num:'4',label:'Saves'},{num:'8',label:'Shares'}], link:'https://www.instagram.com/p/DUGHd95iGok/?igsh=cnZhc294ZGlwajdl' }
+];
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const pre = document.getElementById('preloader');
+    if(!pre) return;
+    pre.style.transition='opacity 0.8s';
+    pre.style.opacity='0';
+    setTimeout(()=>{ pre.style.display='none'; initAll(); }, 800);
+  }, 1200);
+});
+
+function initAll() {
+  initCursor(); initNav(); initTyping(); initReveal(); initModals(); initVideoHover(); initCardControls(); initVideoAutoplay(); initCarousels();
+}
+
+function initCarousels() {
+  document.querySelectorAll('.card-carousel').forEach(carousel => {
+    const slides = carousel.querySelectorAll('.card-carousel-img');
+    if (slides.length < 2) return;
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
+    }, 3000);
+  });
+}
+
+function initVideoHover() {
+  document.querySelectorAll('.post-card, .reel-card').forEach(card => {
+    const vid = card.querySelector('.card-video');
+    if (!vid) return;
+    card.addEventListener('mouseenter', () => {
+      if (vid.src && vid.src !== window.location.href) { vid.play().catch(()=>{}); }
+    });
+    card.addEventListener('mouseleave', () => {
+      vid.pause(); vid.currentTime = 0;
+    });
+  });
+}
+
+const ICON_MUTED   = '<svg viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a8.99 8.99 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z" fill="#fff"/></svg>';
+const ICON_UNMUTED = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" fill="#fff"/></svg>';
+const ICON_INFO    = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="#fff"/></svg>';
+
+function initCardControls() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    const vid = card.querySelector('.card-video');
+    const hasVideo = vid && vid.getAttribute('src');
+    const controls = document.createElement('div');
+    controls.className = 'card-controls';
+
+    if (hasVideo) {
+      vid.muted = true;
+      const muteBtn = document.createElement('button');
+      muteBtn.className = 'card-control-btn card-mute-btn';
+      muteBtn.setAttribute('aria-label', 'Toggle sound');
+      muteBtn.innerHTML = ICON_MUTED;
+      muteBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        vid.muted = !vid.muted;
+        muteBtn.innerHTML = vid.muted ? ICON_MUTED : ICON_UNMUTED;
+      });
+      controls.appendChild(muteBtn);
+    }
+
+    const infoBtn = document.createElement('button');
+    infoBtn.className = 'card-control-btn card-info-btn';
+    infoBtn.setAttribute('aria-label', 'View details');
+    infoBtn.innerHTML = ICON_INFO;
+    infoBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const idx = parseInt(card.dataset.project);
+      if (!isNaN(idx) && projects[idx]) openModal(projects[idx]);
+    });
+    controls.appendChild(infoBtn);
+
+    card.appendChild(controls);
+
+    const cta = card.querySelector('.project-card-cta');
+    if (cta) {
+      cta.addEventListener('click', e => {
+        e.stopPropagation();
+        const idx = parseInt(card.dataset.project);
+        if (!isNaN(idx) && projects[idx]) openModal(projects[idx]);
+      });
+    }
+  });
+}
+
+function initTyping() {
+  const el = document.getElementById('heroTyped');
+  if(!el) return;
+  const phrases = ['Brand Storyteller ✦','Growth Hacker 📈','Content Producer 🎥','Content Architect 🎨','Your Secret Weapon 🚀'];
+  let pi=0,ci=0,del=false;
+  function tick(){
+    const p=phrases[pi];
+    if(!del){el.textContent=p.slice(0,++ci);if(ci===p.length){del=true;setTimeout(tick,2000);return;}}
+    else{el.textContent=p.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length;}}
+    setTimeout(tick,del?50:95);
+  }
+  setTimeout(tick,700);
+}
+
+function initCursor() {
+  const cur = document.getElementById('cursor');
+  if(!cur || window.matchMedia('(pointer:coarse)').matches) return;
+  let mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function tick(){cx+=(mx-cx)*0.12;cy+=(my-cy)*0.12;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(tick);})();
+  document.querySelectorAll('a,button,.project-card,.diff-item,.mc').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cur.classList.add('lg'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('lg'));
+  });
+}
+
+function initNav() {
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY>60); },{passive:true});
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{ const t=document.querySelector(a.getAttribute('href')); if(!t) return; e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); });
+  });
+}
+
+function initReveal() {
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target);} });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal,.mockup-wrap').forEach(el=>obs.observe(el));
+}
+
+function initModals() {
+  const overlay = document.getElementById('modalOverlay');
+  const isTouch = window.matchMedia('(hover:none)').matches;
+  document.querySelectorAll('.project-card').forEach(card=>{
+    // On touch devices, tapping the card just plays/views the video — only
+    // the dedicated info (ⓘ) button opens the details popup.
+    if (isTouch) return;
+    card.addEventListener('click',()=>openModal(projects[parseInt(card.dataset.project)]));
+  });
+  document.getElementById('modalClose').addEventListener('click',closeModal);
+  overlay.addEventListener('click',e=>{ if(e.target===overlay) closeModal(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+}
+
+function initVideoAutoplay() {
+  if (!window.matchMedia('(hover:none)').matches) return;
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      const vid = entry.target.querySelector('.card-video');
+      if (!vid || !vid.getAttribute('src')) return;
+      if (entry.isIntersecting) { vid.play().catch(()=>{}); }
+      else { vid.pause(); vid.currentTime = 0; }
+    });
+  },{threshold:0.6});
+  document.querySelectorAll('.reel-card').forEach(card=>obs.observe(card));
+}
+
+function openModal(p) {
+  document.getElementById('mPlatform').textContent = p.platform;
+  document.getElementById('mTitle').textContent = p.title;
+  document.getElementById('mSubtitle').textContent = p.subtitle;
+  document.getElementById('mBrief').textContent = p.brief;
+  document.getElementById('mExecution').textContent = p.execution;
+  document.getElementById('mStats').innerHTML = p.results.map(s=>`<div class="modal-stat-box"><div class="modal-stat-num">${s.num}</div><div class="modal-stat-label">${s.label}</div></div>`).join('');
+  const linkBtn = document.getElementById('mLink');
+  linkBtn.href = p.link || '#';
+  linkBtn.style.display = p.link ? 'inline-flex' : 'none';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('modal').scrollTop=0;
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
