@@ -434,9 +434,6 @@
     .project-card { }
     .pv { position:absolute; inset:0; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
     .post-card:hover .pv, .reel-card:hover .pv { transform:scale(1.04); }
-    .pv-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; padding:28px; }
-    .pv-icon { font-size:52px; margin-bottom:10px; filter:drop-shadow(0 4px 16px rgba(0,0,0,0.4)); }
-    .pv-name { font-family:var(--serif); font-size:22px; font-weight:700; color:#fff; letter-spacing:0.01em; margin-bottom:16px; text-align:center; }
     .pv-chart { display:flex; gap:5px; align-items:flex-end; height:48px; margin-bottom:16px; }
     .pv-bar { width:10px; border-radius:2px 2px 0 0; opacity:0.7; }
     .pv-stat { font-family:var(--serif); font-size:30px; font-weight:700; color:#fff; line-height:1; }
@@ -595,9 +592,6 @@
     .footer-logo { font-family:var(--hand); font-size:22px; color:var(--ink); }
     .footer-logo span { color:var(--pink); }
     .footer-copy { font-family:var(--mono); font-size:9px; letter-spacing:0.12em; color:var(--ink-xs); }
-    .footer-social { display:flex; gap:12px; }
-    .footer-social a { width:36px; height:36px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--ink-dim); transition:background 0.2s, color 0.2s, border-color 0.2s; }
-    .footer-social a:hover { background:var(--pink); color:#fff; border-color:var(--pink); }
 
     /* ── REVEAL ──────────────────────────────────────────────────── */
     .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.8s ease, transform 0.8s ease; }
@@ -794,8 +788,7 @@
 
       <!-- Post 1 — My Designer is on a holiday -->
       <div class="post-card project-card reveal" data-project="0">
-        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">✨</div><div class="pv-name">Designer Holiday</div></div></div>
+        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <img src="assets /My Designer is on a holiday.jpg" class="card-img" alt="Designer Holiday" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <video class="card-video" muted loop playsinline></video>
         <div class="project-card-overlay"></div>
@@ -806,8 +799,7 @@
 
       <!-- Post 2 — Orientation Day -->
       <div class="post-card project-card reveal reveal-delay-1" data-project="1">
-        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">🎓</div><div class="pv-name">Orientation Day</div></div></div>
+        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <img src="assets /Orientation Day in Oranim.jpg" class="card-img" alt="Orientation Day" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <video class="card-video" muted loop playsinline></video>
         <div class="project-card-overlay"></div>
@@ -818,8 +810,7 @@
 
       <!-- Post 3 — TASE Celebration -->
       <div class="post-card project-card reveal reveal-delay-2" data-project="2">
-        <div class="pv pv-beauty"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">🎉</div><div class="pv-name">TASE Milestone</div></div></div>
+        <div class="pv pv-beauty"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <img src="assets /TASE celebrates 10K.jpg" class="card-img" alt="TASE 10K" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <video class="card-video" muted loop playsinline></video>
         <div class="project-card-overlay"></div>
@@ -830,8 +821,7 @@
 
       <!-- Post 4 — TASE Palo Alto -->
       <div class="post-card project-card reveal" data-project="3">
-        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">🌟</div><div class="pv-name">TASE Palo Alto</div></div></div>
+        <div class="pv pv-b2b"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <img src="assets /TASE weldome Palo Alto.jpg" class="card-img" alt="TASE Palo Alto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"/>
         <video class="card-video" muted loop playsinline></video>
         <div class="project-card-overlay"></div>
@@ -842,8 +832,7 @@
 
       <!-- Post 5 — Types of Students in Oranim (carousel) -->
       <div class="post-card project-card reveal reveal-delay-1" data-project="10">
-        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">🎒</div><div class="pv-name">Types of Students</div></div></div>
+        <div class="pv pv-fashion"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <div class="card-carousel">
           <img src="assets /typ.jpeg" class="card-carousel-img active" alt="Types of Students in Oranim"/>
           <img src="assets /typ1.jpeg" class="card-carousel-img" alt="Types of Students in Oranim"/>
@@ -873,8 +862,7 @@
 
       <!-- Reel 1 — TA 90 Seconds -->
       <div class="reel-card project-card reveal" data-project="9">
-        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">⏱️</div><div class="pv-name">TA 90 Seconds</div></div></div>
+        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets / TA-90 Seconds.mp4"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -884,8 +872,7 @@
 
       <!-- Reel 2 — The Dekel Interview -->
       <div class="reel-card project-card reveal reveal-delay-1" data-project="7">
-        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">🎤</div><div class="pv-name">The Dekel Interview</div></div></div>
+        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets / The dekel Interview.mp4"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -895,8 +882,7 @@
 
       <!-- Reel 3 — Bed Time Story - Seach -->
       <div class="reel-card project-card reveal reveal-delay-2" data-project="6">
-        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">📖</div><div class="pv-name">Bed Time Story</div></div></div>
+        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets /Bed Time Story - Seach.mp4"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -906,8 +892,7 @@
 
       <!-- Reel 4 — SPARKLES Reflecting -->
       <div class="reel-card project-card reveal" data-project="8">
-        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">✨</div><div class="pv-name">SPARKLES Reflecting</div></div></div>
+        <div class="pv pv-coffee"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets /SPARKLES - Reflcting.mov"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -917,8 +902,7 @@
 
       <!-- Reel 5 — SPARKLES Glasses -->
       <div class="reel-card project-card reveal reveal-delay-1" data-project="5">
-        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">👓</div><div class="pv-name">SPARKLES Glasses</div></div></div>
+        <div class="pv pv-fitness"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets /SPARKLES - glasses.mov"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -928,8 +912,7 @@
 
       <!-- Reel 6 — We're All Dealing With Something -->
       <div class="reel-card project-card reveal reveal-delay-2" data-project="4">
-        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div>
-          <div class="pv-inner"><div class="pv-icon">💭</div><div class="pv-name">Dealing With Something</div></div></div>
+        <div class="pv pv-startup"><div class="pv-circle1"></div><div class="pv-circle2"></div></div>
         <video class="card-video" muted loop playsinline preload="metadata" src="assets /were all dealing with someting.mov"></video>
         <div class="project-card-overlay"></div>
         <div class="project-card-body">
@@ -1007,12 +990,6 @@
 <footer class="footer">
   <div class="footer-logo">Yaara <span>TZIN</span></div>
   <div class="footer-copy">© 2026 Yaara TZIN - Organic social media manager</div>
-  <div class="footer-social">
-    <a href="#" aria-label="Instagram">📸</a>
-    <a href="#" aria-label="LinkedIn">in</a>
-    <a href="#" aria-label="TikTok">♪</a>
-    <a href="#" aria-label="X">𝕏</a>
-  </div>
 </footer>
 
 <!-- MODAL -->
