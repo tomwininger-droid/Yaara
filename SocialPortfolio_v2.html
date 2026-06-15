@@ -475,9 +475,9 @@
     /* Card controls — mute & info buttons, revealed on hover (desktop) or always visible (touch) */
     .card-controls { position:absolute; top:54px; right:14px; z-index:6; display:flex; flex-direction:column; gap:8px; opacity:0; transform:translateY(-4px); transition:opacity 0.3s, transform 0.3s; }
     .post-card:hover .card-controls, .reel-card:hover .card-controls { opacity:1; transform:translateY(0); }
-    .card-control-btn { width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s, transform 0.2s; }
+    .card-control-btn { width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s, transform 0.2s; }
     .card-control-btn:hover { background:rgba(232,0,111,0.65); transform:scale(1.08); }
-    .card-control-btn svg { width:13px; height:13px; fill:#fff; }
+    .card-control-btn svg { width:16px; height:16px; fill:#fff; }
     /* Touch devices: no hover, so keep controls visible and skip the reveal-on-hover treatments */
     @media (hover:none) {
       .card-controls { opacity:1; transform:translateY(0); }
@@ -546,7 +546,6 @@
     .diff-item::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(to right, var(--pink), transparent); transform:scaleX(0); transform-origin:left; transition:transform 0.5s; }
     .diff-item:hover::before { transform:scaleX(1); }
     .diff-item-num { font-family:var(--serif); font-size:80px; font-weight:700; color:rgba(232,0,111,0.08); line-height:1; margin-bottom:-16px; }
-    .diff-icon { font-size:32px; margin-bottom:20px; }
     .diff-item-title { font-family:var(--serif); font-size:22px; font-weight:700; color:#fff; margin-bottom:12px; line-height:1.15; }
     .diff-item-desc { font-size:14px; color:rgba(255,255,255,0.5); line-height:1.8; font-weight:300; }
     .diff-hand { font-family:var(--hand); font-size:16px; color:var(--pink); margin-top:16px; }
@@ -950,10 +949,10 @@
     <h2 class="diff-title reveal reveal-delay-1">Not just another <br><em>social manager.</em></h2>
   </div>
   <div class="diff-grid">
-    <div class="diff-item reveal"><div class="diff-item-num">01</div><div class="diff-icon">🎬</div><div class="diff-item-title">High-End Content Production</div><div class="diff-item-desc">I don't just manage social media - I create it. From filming and directing to editing and post-production, I craft content designed for modern attention spans. Every frame, cut, and transition is intentional, ensuring the final result is both visually compelling and platform-native</div><div class="diff-hand">Details make the difference ✓</div></div>
-    <div class="diff-item reveal reveal-delay-1"><div class="diff-item-num">02</div><div class="diff-icon">📖</div><div class="diff-item-title">Brand Storytelling</div><div class="diff-item-desc">Every brand has a unique voice. My role is to translate it into content that feels authentic, recognizable, and consistent across platforms. Whether the tone is educational, playful, professional, or bold, I make sure every post sounds unmistakably like the brand behind it.</div><div class="diff-hand">Consistency builds trust ✓</div></div>
-    <div class="diff-item reveal reveal-delay-2"><div class="diff-item-num">03</div><div class="diff-icon">📈</div><div class="diff-item-title">Creative Backed by Performance</div><div class="diff-item-desc">The work doesn't end when content goes live. I continuously monitor performance, identify what resonates with audiences, and apply those learnings to future content. This process turns every post into an opportunity to improve the next one.</div><div class="diff-hand">Create. Learn. Improve. ✓</div></div>
-    <div class="diff-item reveal reveal-delay-3"><div class="diff-item-num">04</div><div class="diff-icon">💬</div><div class="diff-item-title">Social Media Is My Native Language</div><div class="diff-item-desc">I don't just work in social media — I genuinely enjoy being part of it. I spend my time exploring platforms, following emerging trends, and understanding how people consume content. This allows me to quickly identify what feels relevant, what feels forced, and how brands can participate in conversations authentically.</div><div class="diff-hand">Culture moves fast. So do I. ✓</div></div>
+    <div class="diff-item reveal"><div class="diff-item-num">01</div><div class="diff-item-title">High-End Content Production</div><div class="diff-item-desc">I don't just manage social media - I create it. From filming and directing to editing and post-production, I craft content designed for modern attention spans. Every frame, cut, and transition is intentional, ensuring the final result is both visually compelling and platform-native</div><div class="diff-hand">Details make the difference ✓</div></div>
+    <div class="diff-item reveal reveal-delay-1"><div class="diff-item-num">02</div><div class="diff-item-title">Brand Storytelling</div><div class="diff-item-desc">Every brand has a unique voice. My role is to translate it into content that feels authentic, recognizable, and consistent across platforms. Whether the tone is educational, playful, professional, or bold, I make sure every post sounds unmistakably like the brand behind it.</div><div class="diff-hand">Consistency builds trust ✓</div></div>
+    <div class="diff-item reveal reveal-delay-2"><div class="diff-item-num">03</div><div class="diff-item-title">Creative Backed by Performance</div><div class="diff-item-desc">The work doesn't end when content goes live. I continuously monitor performance, identify what resonates with audiences, and apply those learnings to future content. This process turns every post into an opportunity to improve the next one.</div><div class="diff-hand">Create. Learn. Improve. ✓</div></div>
+    <div class="diff-item reveal reveal-delay-3"><div class="diff-item-num">04</div><div class="diff-item-title">Social Media Is My Native Language</div><div class="diff-item-desc">I don't just work in social media — I genuinely enjoy being part of it. I spend my time exploring platforms, following emerging trends, and understanding how people consume content. This allows me to quickly identify what feels relevant, what feels forced, and how brands can participate in conversations authentically.</div><div class="diff-hand">Culture moves fast. So do I. ✓</div></div>
   </div>
 </section>
 
@@ -1006,7 +1005,7 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-logo">Alex <span>TZIN</span></div>
+  <div class="footer-logo">Yaara <span>TZIN</span></div>
   <div class="footer-copy">© 2026 Yaara TZIN - Organic social media manager</div>
   <div class="footer-social">
     <a href="#" aria-label="Instagram">📸</a>
