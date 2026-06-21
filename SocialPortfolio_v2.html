@@ -383,7 +383,8 @@
     .logo-strip-track:hover { animation-play-state:paused; }
     @keyframes logoScroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
     .logo-strip-item { display:flex; align-items:center; justify-content:center; padding:12px 56px; white-space:nowrap; border-right:1px solid var(--border); }
-    .logo-strip-item img { width:200px; height:60px; object-fit:contain; opacity:0.85; filter:grayscale(15%); transition:opacity 0.3s, filter 0.3s, transform 0.3s; }
+    .logo-strip-item img { height:58px; width:auto; max-width:190px; object-fit:contain; opacity:0.85; filter:grayscale(15%); transition:opacity 0.3s, filter 0.3s, transform 0.3s; }
+    .logo-strip-item img.logo-compact { height:82px; max-width:none; }
     .logo-strip-item:hover img { opacity:1; filter:grayscale(0%); transform:scale(1.06); }
 
     /* ── TICKER ──────────────────────────────────────────────────── */
@@ -702,7 +703,7 @@
       <div class="logo-strip-track">
         <!-- set 1 -->
         <div class="logo-strip-item">
-          <img src="assets /logos/norm_LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy">
+          <img src="assets /logos/norm_LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy" class="logo-compact">
         </div>
         <div class="logo-strip-item">
           <img src="assets /logos/norm_more_logo_blue.png" alt="More" loading="lazy">
@@ -715,7 +716,7 @@
         </div>
         <!-- set 2 — duplicate for seamless loop -->
         <div class="logo-strip-item">
-          <img src="assets /logos/norm_LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy">
+          <img src="assets /logos/norm_LOGO RASHI 1 EN.png" alt="Rashi" loading="lazy" class="logo-compact">
         </div>
         <div class="logo-strip-item">
           <img src="assets /logos/norm_more_logo_blue.png" alt="More" loading="lazy">
